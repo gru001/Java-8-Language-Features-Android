@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Java8Feature</string>
+    <string name="message_no_data">No Data</string>
+    <string name="title_sort_by">Sort by</string>
+    <string name="action_search">Search</string>
+</resources>
