@@ -51,6 +51,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
     }
 
     public void addItems(List<ToDo> item) {
+        mToDos.clear();
         mToDos.addAll(item);
         notifyDataSetChanged();
     }

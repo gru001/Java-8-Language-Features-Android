@@ -35,10 +35,9 @@ public class FilterUtils {
             final String title = mapper.apply(toDo);
             if (checkText.test(title)) {
                 filteredModelList.add(toDo);
-                block.accept(filteredModelList);
             }
         }
-
+        block.accept(filteredModelList);
     }
 
     public static void filterLogger(List<ToDo> todos, String query, Predicate<ToDo> checkText, Function<ToDo, String> mapper, Consumer<String> block) {

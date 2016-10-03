@@ -89,9 +89,7 @@ public class MainActivity extends Activity implements TodoContract.View, ToDoAda
     }
 
     private void onFilterdData(List<ToDo> todos) {
-        mToDos.clear();
-        mToDos.addAll(todos);
-        mAdapter.addItems(mToDos);
+        mAdapter.addItems(todos);
     }
 
     @Override
