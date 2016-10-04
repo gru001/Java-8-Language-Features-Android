@@ -27,7 +27,7 @@
             android:text="@string/title_sort_by"/>
 
         <ImageView
-            android:id="@+id/imgSortAlphabetical"
+            android:id="@+id/imgSort"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"

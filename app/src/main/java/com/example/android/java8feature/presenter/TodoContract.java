@@ -1,6 +1,6 @@
 package com.example.android.java8feature.presenter;
 
-import com.example.android.java8feature.model.ToDo;
+import com.example.android.java8feature.model.ToDoModel;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public interface TodoContract {
     interface View {
         void setProgressBar(boolean active);
 
-        void onSuccessLoadTodos(List<ToDo> todos);
+        void onSuccessLoadTodos(List<ToDoModel> todos);
 
         void onError();
     }

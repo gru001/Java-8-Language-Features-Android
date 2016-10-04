@@ -5,9 +5,9 @@ import android.util.Log;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ToDo {
+public class ToDoModel {
 
-    private static final String TAG = ToDo.class.getSimpleName();
+    private static final String TAG = ToDoModel.class.getSimpleName();
 
     @SerializedName("userId")
     @Expose

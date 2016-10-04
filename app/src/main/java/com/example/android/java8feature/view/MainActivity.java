@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.example.android.java8feature.R;
 import com.example.android.java8feature.ToDoAdapter;
-import com.example.android.java8feature.model.ToDo;
+import com.example.android.java8feature.model.ToDoModel;
 import com.example.android.java8feature.presenter.TodoContract;
 import com.example.android.java8feature.presenter.TodoPresenter;
 import com.example.android.java8feature.utils.DividerItemDecoration;
@@ -26,15 +26,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends Activity implements TodoContract.View, ToDoAdapter.ItemClickListener, SearchView.OnQueryTextListener {
+    private static final String TAG = MainActivity.class.getSimpleName();
     private ProgressBar progressBar;
     private TextView emptyView;
     private RecyclerView rcyvTodo;
     private ToDoAdapter mAdapter;
-    private List<ToDo> mToDos;
-    private ImageView imgSortAlphabetical;
-
-    private static final String TAG = MainActivity.class.getSimpleName();
-
+    private List<ToDoModel> mToDos;
+    private ImageView imgSort;
     private TodoContract.UserActionListener mPresenter;
 
     @Override
@@ -53,7 +51,7 @@ public class MainActivity extends Activity implements TodoContract.View, ToDoAda
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         emptyView = (TextView) findViewById(R.id.emptyView);
         rcyvTodo = (RecyclerView) findViewById(R.id.rcyvTodo);
-        imgSortAlphabetical = (ImageView) findViewById(R.id.imgSortAlphabetical);
+        imgSort = (ImageView) findViewById(R.id.imgSort);
 
         mToDos = new ArrayList<>();
 
@@ -63,8 +61,13 @@ public class MainActivity extends Activity implements TodoContract.View, ToDoAda
         mAdapter = new ToDoAdapter(this);
         rcyvTodo.setAdapter(mAdapter);
 
-        imgSortAlphabetical.setOnClickListener(v ->
-                mToDos.sort((ToDo todo1, ToDo todo2) -> todo1.getTitle().compareTo(todo2.getTitle()))
+        /**
+         * Simple Lambda expression use case for {@link View.android.view.View.OnClickListener}
+         *
+         */
+        imgSort.setOnClickListener(v ->
+                /** Lambda expression for {@link java.util.Comparator}*/
+                mToDos.sort((ToDoModel todo1, ToDoModel todo2) -> todo1.getTitle().compareTo(todo2.getTitle()))
         );
     }
 
@@ -88,12 +91,12 @@ public class MainActivity extends Activity implements TodoContract.View, ToDoAda
         }
     }
 
-    private void onFilterdData(List<ToDo> todos) {
+    private void onFilterdData(List<ToDoModel> todos) {
         mAdapter.addItems(todos);
     }
 
     @Override
-    public void onSuccessLoadTodos(List<ToDo> todos) {
+    public void onSuccessLoadTodos(List<ToDoModel> todos) {
         mToDos.clear();
         mToDos.addAll(todos);
         mAdapter.addItems(mToDos);
@@ -107,10 +110,10 @@ public class MainActivity extends Activity implements TodoContract.View, ToDoAda
     @Override
     public void onItemClick(int pos) {
         Toast.makeText(this, mToDos.get(pos).getTitle(), Toast.LENGTH_SHORT).show();
-        // for demo purpose only
+        /** These are the methods {@link FilterUtils#printTodosWithPredicate} */
         FilterUtils.printTodosWithPredicate(mToDos, m -> m.getTitle().length() > 20);
-        FilterUtils.printTodosWithPredicateConsume(mToDos, m -> m.getTitle().length() > 20, ToDo::printTodo);
-        FilterUtils.printTodosWithPredicateFunctionConsume(mToDos, m -> m.getTitle().length() > 20, ToDo::getTitle, title -> Log.e(TAG, "onItemClick: " + title));
+        FilterUtils.printTodosWithPredicateConsume(mToDos, m -> m.getTitle().length() > 20, ToDoModel::printTodo);
+        FilterUtils.printTodosWithPredicateFunctionConsume(mToDos, m -> m.getTitle().length() > 20, ToDoModel::getTitle, title -> Log.e(TAG, "onItemClick: " + title));
     }
 
     @Override
@@ -121,7 +124,11 @@ public class MainActivity extends Activity implements TodoContract.View, ToDoAda
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        FilterUtils.filter(mToDos, m -> m.getTitle().toLowerCase(), s -> s.contains(query), t -> onFilterdData(t));
+        /**
+         * Here we are using functional interface with Lambda expression also check last method argument which
+         * makes use of Method Reference {@see <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Method Reference</a>}
+         */
+        FilterUtils.filter(mToDos, m -> m.getTitle().toLowerCase(), s -> s.contains(query), this::onFilterdData);
         return true;
     }
 

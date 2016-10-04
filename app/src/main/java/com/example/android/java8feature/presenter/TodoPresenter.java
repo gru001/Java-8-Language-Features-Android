@@ -3,7 +3,7 @@ package com.example.android.java8feature.presenter;
 import android.util.Log;
 
 import com.example.android.java8feature.model.JsonPlaceHolderService;
-import com.example.android.java8feature.model.ToDo;
+import com.example.android.java8feature.model.ToDoModel;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class TodoPresenter implements TodoContract.UserActionListener {
     private static final String TAG = TodoPresenter.class.getSimpleName();
 
     private Subscription subscription;
-    private List<ToDo> mToDos;
+    private List<ToDoModel> mToDos;
     private TodoContract.View view;
 
     public TodoPresenter(TodoContract.View view) {
@@ -40,10 +40,10 @@ public class TodoPresenter implements TodoContract.UserActionListener {
     @Override
     public void loadTodos() {
         view.setProgressBar(true);
-        Observable<List<ToDo>> observable = JsonPlaceHolderService.Factory.create().getAllToDos();
+        Observable<List<ToDoModel>> observable = JsonPlaceHolderService.Factory.create().getAllToDos();
         subscription = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<ToDo>>() {
+                .subscribe(new Subscriber<List<ToDoModel>>() {
                     @Override
                     public void onCompleted() {
                         Log.i(TAG, "onCompleted: ");
@@ -63,7 +63,7 @@ public class TodoPresenter implements TodoContract.UserActionListener {
                     }
 
                     @Override
-                    public void onNext(List<ToDo> toDos) {
+                    public void onNext(List<ToDoModel> toDos) {
                         Log.i(TAG, "onNext: ");
                         TodoPresenter.this.mToDos = toDos;
                     }

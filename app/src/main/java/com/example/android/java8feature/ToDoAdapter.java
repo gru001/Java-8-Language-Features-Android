@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.android.java8feature.model.ToDo;
+import com.example.android.java8feature.model.ToDoModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
  */
 
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder> {
-    private List<ToDo> mToDos;
+    private List<ToDoModel> mToDos;
     private ItemClickListener itemClickListener;
 
     public ToDoAdapter(ItemClickListener itemClickListener) {
@@ -36,7 +36,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
 
     @Override
     public void onBindViewHolder(ToDoViewHolder holder, int position) {
-        final ToDo model = mToDos.get(position);
+        final ToDoModel model = mToDos.get(position);
         holder.lblTitle.setText(model.getTitle());
     }
 
@@ -45,18 +45,18 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
         return mToDos.size();
     }
 
-    public void add(int position, ToDo item) {
+    public void add(int position, ToDoModel item) {
         mToDos.add(position, item);
         notifyItemInserted(position);
     }
 
-    public void addItems(List<ToDo> item) {
+    public void addItems(List<ToDoModel> item) {
         mToDos.clear();
         mToDos.addAll(item);
         notifyDataSetChanged();
     }
 
-    public void remove(ToDo item) {
+    public void remove(ToDoModel item) {
         int position = mToDos.indexOf(item);
         mToDos.remove(position);
         notifyItemRemoved(position);

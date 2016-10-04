@@ -24,7 +24,7 @@ import rx.Observable;
 public interface JsonPlaceHolderService {
 
     @GET("todos")
-    Observable<List<ToDo>> getAllToDos();
+    Observable<List<ToDoModel>> getAllToDos();
 
     class Factory {
         public static JsonPlaceHolderService create() {
