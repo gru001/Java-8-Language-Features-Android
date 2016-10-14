@@ -1,4 +1,4 @@
-# Java-8-Language-Features-Android
+# Java 8 Language Features Android
 Describes the new [Java 8 language](https://developer.android.com/guide/platform/j8-jack.html) features that you can use in your Android app.
 
 ##The App
